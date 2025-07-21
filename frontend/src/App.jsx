@@ -1,8 +1,17 @@
 import { useState } from 'react';
+import { getRiskLevel } from './utils/riskLevel';
+
 import IpInput from './components/IpInput';
 
 function App() {
   const [result, setResult] = useState(null);
+  const riskLevel = result ? getRiskLevel(result) : null;
+
+  const riskColor = {
+  High: 'red',
+  Medium: 'orange',
+  Low: 'green',
+}[riskLevel];
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
@@ -20,6 +29,10 @@ function App() {
             <li><strong>Recent Reports:</strong> {result.recentReports}</li>
             <li><strong>VPN/Proxy:</strong> {result.vpnDetected ? 'Yes' : 'No'}</li>
             <li><strong>Threat Score:</strong> {result.threatScore}</li>
+           <li>
+              <strong>Overall Risk:</strong>{' '}
+              <span style={{ color: riskColor, fontWeight: 'bold' }}>{riskLevel}</span>
+            </li>
           </ul>
         </div>
       )}
