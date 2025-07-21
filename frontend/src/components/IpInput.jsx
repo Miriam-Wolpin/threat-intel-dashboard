@@ -1,17 +1,25 @@
 import { useState } from 'react';
 import { fetchIntel } from '../services/api';
+import { useIntel } from '../context/IntelContext';
 
-export default function IpInput({ onResult }) {
+export default function IpInput() {
   const [ip, setIp] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const {
+    setResult,
+    setLoading,
+    setError,
+    addToHistory,
+    loading,
+    error
+  } = useIntel();
 
   const handleCheck = async () => {
     setLoading(true);
     setError(null);
     try {
       const result = await fetchIntel(ip);
-      onResult(result); // Pass result to parent
+      setResult(result);
+      addToHistory(result.ip);
     } catch (err) {
       if (err.response?.status === 429) {
         setError('Rate limit reached. Please try again later.');

@@ -1,5 +1,5 @@
 function isValidIp(ip) {
-  const ipRegex = /^(?:\d{1,3}\.){3}\d{1,3}$/;
+  const ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/;
   return ipRegex.test(ip);
 }
 
