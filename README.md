@@ -83,8 +83,20 @@ npx vitest
 - `frontend/`: React app (with components, context, hooks, utils, and tests)
 - `backend/`: Node.js API server (with routes, services, utils, and tests)
 
-## Notes
+## Development Notes
 
-- Rate limiting is handled gracefully with custom error messages.
-- The system is modular and can be extended with more data sources.
+This project was built with clarity and simplicity in mind, balancing clean modular code with practical features. A few tradeoffs and design decisions include:
+
+- **Context API over Redux**: For global state management, I used React's built-in Context API. Since the app's state needs were limited (mainly result data and loading/error flags), Context was a lightweight and maintainable choice.
+
+- **Client-side validation**: IP validation was handled both on the client (optional UX enhancement) and server (strict validation for safety). The regex was refined during testing to ensure accuracy.
+
+- **API response aggregation**: The backend acts as a BFF (Backend for Frontend), merging two external API responses into one unified object. This makes the frontend simpler and decouples it from third-party formats.
+
+- **Testing strategy**: I focused on key logic and component behavior. The backend tests mock external APIs and validate aggregation. The frontend tests cover rendering, state transitions, and error handling.
+
+- **Rate limit handling**: External APIs may block requests after a threshold. I implemented graceful 429 handling both server-side and in the UI, so the user isn't confused by cryptic errors.
+
+- **Styling**: Since the focus was on functionality and architecture, styling was intentionally minimal. The component structure allows easy integration of design systems like Tailwind or Material UI if desired.
+
 
